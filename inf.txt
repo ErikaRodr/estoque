@@ -1,0 +1,30 @@
+"""
+@app.route('/gerar_excel')
+def gerar_excel():
+    now = datetime.now()
+    df = pd.DataFrame(estoque, columns=['produto', 'tamanho', 'cor', 'tecido', 'quantidade', 'preco'])
+    df['data'] = now.strftime('%d/%m/%Y')
+    df['hora'] = now.strftime('%H:%M:%S')
+
+    
+    excel_filename = 'estoque.xlsx'
+    caminho_excel = os.path.join('static', excel_filename)
+    
+    df.to_excel(caminho_excel, index=False)
+
+    return send_file(caminho_excel, as_attachment=True)
+
+def validar_produto(produto):
+    return produto.capitalize() if produto.lower() in ['camiseta', 'baby look'] else None
+
+def validar_tamanho(tamanho):
+    tamanhos_validos = ['P', 'M', 'G', 'GG', 'XG', 'XGG']
+    return tamanho.upper() if tamanho.upper() in map(str.upper, tamanhos_validos) else None
+
+def validar_cor(cor):
+    cores_validas = ['Preto', 'Branco', 'Amarelo', 'Azul']
+    return formatar_primeira_letra_maiuscula(cor) if formatar_primeira_letra_maiuscula(cor) in map(formatar_primeira_letra_maiuscula, cores_validas) else None
+
+def formatar_primeira_letra_maiuscula(texto):
+    return texto.capitalize()
+"""

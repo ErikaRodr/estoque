@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Leitor QR-Code{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        /* Adicione aqui o estilo para o modal */
+        #video-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #video {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Conteúdo da sua página ler_qr.html -->
+    <h1>Ler QR Code com a Câmera</h1>
+    <div id="video-container">
+        <video id="video" autoplay></video>
+    </div>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <script>
+        var video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function(err) {
+                console.log("An error occurred: " + err);
+            });
+
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var qr_result = '';
+
+        video.addEventListener('play', function() {
+            setInterval(function() {
+                context.drawImage(video, 0, 0, 640, 480);
+                var imgData = context.getImageData(0, 0, 640, 480);
+                
+                var code = jsQR(imgData.data, imgData.width, imgData.height, { inversionAttempts: "dontInvert" });
+                if (code) {
+                    qr_result = code.data;
+                    console.log('QR Code lido:', qr_result);
+                    // Adicione aqui o código para enviar o resultado do QR Code para o servidor
+                }
+            }, 1000);
+        });
+    </script>
+{% endblock %}
+
+
+
+

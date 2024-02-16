@@ -1,0 +1,33 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Seu Título{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <nav>
+        <div class="button-container">
+            {% if request.endpoint != 'index' %}
+                <a href="{{ url_for('index') }}"><button>Página Inicial</button></a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.rawgit.com/cozmo/jsQR/1.0.1/dist/jsQR.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+

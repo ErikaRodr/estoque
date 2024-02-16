@@ -1,0 +1,15 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+    <!-- Conteúdo da sua página home.html -->
+    <h1>Bem-vindo à Página Inicial</h1>
+    <p>Escolha uma opção abaixo:</p>
+
+    <a href="{{ url_for('gerar_qr') }}"><button>Gerador QRCode</button></a>
+    <a href="{{ url_for('ler_qr') }}"><button>Leitor QRCode</button></a>
+{% endblock %}
+
+
